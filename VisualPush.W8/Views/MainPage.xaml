@@ -12,7 +12,7 @@
 
     <prism:VisualStateAwarePage.Resources>
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">MainPage</x:String>
+        <x:String x:Key="AppName">Visual Push</x:String>
     </prism:VisualStateAwarePage.Resources>
 
 	<!--
@@ -54,6 +54,33 @@
 			           Text="{StaticResource AppName}" 
 					   TextWrapping="NoWrap" 
 					   VerticalAlignment="Bottom" />
+
+           
         </Grid>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="1"
+                      Grid.Column="2"
+                      ZoomMode="Disabled"
+                      Background="Transparent">
+            <Grid Margin="120,0,60,0">
+                <StackPanel>
+                    <TextBox Header="String Connection"></TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <DatePicker Header="Expiry"></DatePicker>
+                        <TimePicker Margin="20,0,0,0" Header=" "></TimePicker>
+                    </StackPanel>
+                    <ComboBox Header="Type" SelectedIndex="0" Width="300"  HorizontalAlignment="Left">
+                        <ComboBoxItem>Toast</ComboBoxItem>
+                        <ComboBoxItem>Tile</ComboBoxItem>
+                        <ComboBoxItem>Badget</ComboBoxItem>
+                    </ComboBox>
+                    <TextBox Header="Payload" TextWrapping="Wrap" Height="200" Text="{Binding Payload}"></TextBox>
+                    <TextBox Header="Tag"></TextBox>
+
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
     </Grid>
 </prism:VisualStateAwarePage>

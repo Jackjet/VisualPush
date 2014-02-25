@@ -1,7 +1,8 @@
 ﻿<prism:MvvmAppBase x:Class="VisualPush.W8.App"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:prism="using:Microsoft.Practices.Prism.StoreApps">
+                   xmlns:prism="using:Microsoft.Practices.Prism.StoreApps" 
+                   RequestedTheme="Light">
 	<prism:MvvmAppBase.Resources>
         <!-- Application-specific resources -->
         <x:String x:Key="AppName">VisualPush.W8</x:String>	
