@@ -65,7 +65,8 @@
                       Background="Transparent">
             <Grid Margin="120,0,60,0">
                 <StackPanel>
-                    <TextBox Header="String Connection"></TextBox>
+                    <TextBox Header="String Connection" Text="{Binding StringConnection}"></TextBox>
+                    <TextBox Header="Path" Text="{Binding Path}"></TextBox>
                     <StackPanel Orientation="Horizontal">
                         <DatePicker Header="Expiry"></DatePicker>
                         <TimePicker Margin="20,0,0,0" Header=" "></TimePicker>
@@ -83,4 +84,11 @@
         </ScrollViewer>
 
     </Grid>
+
+    <Page.BottomAppBar>
+        <AppBar>
+            <AppBarButton Label="Send" Icon="Send" Command="{Binding SendCommand}"></AppBarButton>
+        </AppBar>
+    </Page.BottomAppBar>
+
 </prism:VisualStateAwarePage>
