@@ -2,6 +2,7 @@
 using Microsoft.Practices.Unity;
 using System;
 using System.Threading.Tasks;
+using VisualPush.W8.Services;
 using Windows.ApplicationModel.Activation;
 
 namespace VisualPush.W8
@@ -24,6 +25,8 @@ namespace VisualPush.W8
         protected override void OnInitialize(IActivatedEventArgs args)
         {
             _container.RegisterInstance(NavigationService);
+            _container.RegisterType<INotificationService, NotificationServiceProxy>(new ContainerControlledLifetimeManager());
+
         }
 
         protected override object Resolve(Type type)

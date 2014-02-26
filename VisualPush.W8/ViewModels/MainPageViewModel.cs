@@ -1,28 +1,37 @@
 ﻿using Microsoft.Practices.Prism.StoreApps;
 using Microsoft.Practices.Prism.StoreApps.Interfaces;
+using System;
+using System.Windows.Input;
+using VisualPush.W8.Services;
 
 namespace VisualPush.W8.ViewModels
 {
     public class MainPageViewModel : ViewModel
     {
-        private INavigationService _navigationService;
-
+        private INavigationService navigationService;
+        private INotificationService notificationService;
         public string Payload { get; set; }
-
         public string StringConnection { get; set; }
         public string Path { get; set; }
+        public string Tags { get; set; }
+        public ICommand SendNotificationCommand { get; private set; }
 
-        public MainPageViewModel(INavigationService navigationService)
+        public MainPageViewModel(INavigationService navigationService, INotificationService notificationService)
         {
-            _navigationService = navigationService;
-            Payload = @"<tile><visual version=""2""><binding template=""TileWide310x150ImageAndText01"" fallback=""TileWideImageAndText01""><image id=""1"" src=""http://tokiota.com/images/tiles/widetile-tokiota-310-b.jpg"" alt=""alt text""/><text id=""1"">Tokiota Pawa!</text></binding></visual></tile>";
+            this.navigationService = navigationService;
+            this.notificationService = notificationService;
+
+            Payload = @"<toast><visual><binding template=""ToastText01""><text id=""1"">Sample toast notification!</text></binding></visual></toast>";
             StringConnection = "";
             Path = "tokiota";
+            Tags = "Live_Tiles";
+
+            SendNotificationCommand = new DelegateCommand(SendNotification);
         }
 
-        private void Send()
+        private void SendNotification()
         {
-           
+            notificationService.SendNotificationAsync(StringConnection, Path, Payload, DateTime.Now.ToUniversalTime().AddMinutes(10), Tags);
         }
     }
 }

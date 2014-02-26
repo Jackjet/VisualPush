@@ -77,7 +77,7 @@
                         <ComboBoxItem>Badget</ComboBoxItem>
                     </ComboBox>
                     <TextBox Header="Payload" TextWrapping="Wrap" Height="200" Text="{Binding Payload}"></TextBox>
-                    <TextBox Header="Tag"></TextBox>
+                    <TextBox Header="Tag" Text="{Binding Tags}"></TextBox>
 
                 </StackPanel>
             </Grid>
@@ -87,7 +87,7 @@
 
     <Page.BottomAppBar>
         <AppBar>
-            <AppBarButton Label="Send" Icon="Send" Command="{Binding SendCommand}"></AppBarButton>
+            <AppBarButton Label="Send" Icon="Send" Command="{Binding SendNotificationCommand}"></AppBarButton>
         </AppBar>
     </Page.BottomAppBar>
 
