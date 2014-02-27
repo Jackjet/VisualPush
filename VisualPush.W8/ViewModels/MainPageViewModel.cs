@@ -1,8 +1,17 @@
 ﻿using Microsoft.Practices.Prism.StoreApps;
 using Microsoft.Practices.Prism.StoreApps.Interfaces;
 using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml.Serialization;
+using VisualPush.W8.Models;
 using VisualPush.W8.Services;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
+using Windows.Storage.Streams;
 
 namespace VisualPush.W8.ViewModels
 {
@@ -10,28 +19,47 @@ namespace VisualPush.W8.ViewModels
     {
         private INavigationService navigationService;
         private INotificationService notificationService;
-        public string Payload { get; set; }
-        public string StringConnection { get; set; }
-        public string Path { get; set; }
-        public string Tags { get; set; }
+        public NotificationSetup CurrentNotification { get; set; }
         public ICommand SendNotificationCommand { get; private set; }
+        public ICommand SaveCommand { get; private set; }
 
         public MainPageViewModel(INavigationService navigationService, INotificationService notificationService)
         {
             this.navigationService = navigationService;
             this.notificationService = notificationService;
 
-            Payload = @"<toast><visual><binding template=""ToastText01""><text id=""1"">Sample toast notification!</text></binding></visual></toast>";
-            StringConnection = "";
-            Path = "tokiota";
-            Tags = "Live_Tiles";
-
+            CurrentNotification = new NotificationSetup();
+            
             SendNotificationCommand = new DelegateCommand(SendNotification);
+            SaveCommand = DelegateCommand.FromAsyncHandler(Save);
         }
 
         private void SendNotification()
         {
-            notificationService.SendNotificationAsync(StringConnection, Path, Payload, DateTime.Now.ToUniversalTime().AddMinutes(10), Tags);
+            notificationService.SendNotificationAsync(CurrentNotification);
         }
+
+        private async Task Save()
+        {
+            FileSavePicker savePicker = new FileSavePicker();
+            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            savePicker.FileTypeChoices.Add("XML file", new List<string>() { ".xml" });
+            savePicker.SuggestedFileName = "New Document";
+            StorageFile file = await savePicker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(NotificationSetup));
+                    serializer.Serialize(stream.AsStreamForWrite(), CurrentNotification);
+                    await stream.FlushAsync();
+                    stream.Size = stream.Position;
+                }
+            }
+
+            
+        }
+
     }
 }

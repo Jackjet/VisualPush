@@ -86,9 +86,14 @@
     </Grid>
 
     <Page.BottomAppBar>
-        <AppBar>
+        <CommandBar>
             <AppBarButton Label="Send" Icon="Send" Command="{Binding SendNotificationCommand}"></AppBarButton>
-        </AppBar>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Save" Icon="Save" Command="{Binding SaveCommand}"></AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
     </Page.BottomAppBar>
+
 
 </prism:VisualStateAwarePage>

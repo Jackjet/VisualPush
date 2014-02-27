@@ -2,9 +2,10 @@
 namespace VisualPush.W8.Services
 {
     using System.Threading.Tasks;
+    using VisualPush.W8.Models;
 
     public interface INotificationService
     {
-       Task SendNotificationAsync(string connection, string path, string payload, DateTime datetime, string tags);
+       Task SendNotificationAsync(NotificationSetup notification);
     }
 }
